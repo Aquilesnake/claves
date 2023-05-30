@@ -1,0 +1,28 @@
+pipeline {
+  agent any
+  parameters {
+    multiselect(
+      choices: ['clave1', 'clave2', 'clave3'], 
+      description: 'Seleccione una o varias claves',
+      name: 'CLAVES'
+    )
+    string(
+      defaultValue: '',
+      description: 'Ingrese el rut',
+      name: 'RUT'
+    )
+  }
+  stages {
+    stage('Ejecutar script') {
+      steps {
+        script {
+          def claves = params.CLAVES.split(',')
+          for (clave in claves) {
+            echo "Clave seleccionada: ${clave}"
+          }
+          echo "Rut ingresado: ${params.RUT}"
+        }
+      }
+    }
+  }
+}
